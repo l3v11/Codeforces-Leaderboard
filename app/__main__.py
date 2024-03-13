@@ -1,8 +1,19 @@
+import os
 import pandas as pd
 import dateutil.relativedelta
 import requests
-from datetime import datetime
 from app import handles
+from datetime import datetime
+from time import time
+
+def benchmark(func):
+    # Wrapper to measure execution time of decorated function
+    def timer():
+        start = time()
+        func()
+        stop = time()
+        print(f"Time taken: {stop - start:.3f}s")
+    return timer
 
 class CodeforcesHandler:
     # Provides services for requesting Codeforces API.
@@ -148,7 +159,10 @@ class CodeforcesHandler:
 
         return user_info
 
+@benchmark
 def main():
+    print("Generating Leaderboard...")
+    print("This may take a while. Please wait...")
     codeforces_handler = CodeforcesHandler()
 
     user_data = []
@@ -173,7 +187,10 @@ def main():
     df_sorted.index += 1
     
     # Save DataFrame to CSV
-    df_sorted.to_csv('leaderboard.csv')
+    csv_file = 'leaderboard.csv'
+    df_sorted.to_csv(csv_file)
+
+    print(f"Saved to {os.path.join(os.getcwd(), csv_file)}")
 
 if __name__ == '__main__':
     main()
