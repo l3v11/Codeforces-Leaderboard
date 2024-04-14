@@ -1,11 +1,11 @@
-import os
-from dotenv import load_dotenv
+import json
 
-load_dotenv('config.env', override=True)
+with open('cf_handles.json', 'r') as f:
+    config = json.load(f)
 
-CF_HANDLES = os.environ.get('CF_HANDLES', '')
+CF_HANDLES = config.get("CF_HANDLES", "")
 if not CF_HANDLES:
-    print("CF_HANDLE env variable is missing")
+    print("CF_HANDLE variable is missing")
     exit(1)
 
 handles = [handle.strip() for handle in CF_HANDLES.split()]
