@@ -174,7 +174,7 @@ def main():
     df = pd.DataFrame(user_data)
 
     # Sort DataFrame
-    sort_by_column = 'Problems Solved' # 'Rating'
+    sort_by_column = 'Rating' # 'Problems Solved'
     df_sorted = df.sort_values(by=sort_by_column, ascending=False)
 
     # Drop columns
